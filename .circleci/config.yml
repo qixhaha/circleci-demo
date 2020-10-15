@@ -1,9 +1,19 @@
-version: 2.1
+version: 2
 jobs:
   build:
     docker:
       - image: circleci/node:10
+    branch:
+      only:
+        - master
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'e1:0c:b1:c4:a9:ec:1f:da:4f:9f:bf:50:18:cb:7f:b9'
       - checkout
-      - run: echo "A first hellosa"
-      - run: npm -v
+      - run:
+          name: Install
+          command: yarn install
+      - run:
+          name: Build
+          command: yarn build
